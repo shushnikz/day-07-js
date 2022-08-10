@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        // extract the cityname from restcountries and pass it to city name
+        // 0th index=>output
+
+        var extractCityname=fetch("https://restcountries.com/v2/all")
+        .then((res)=>{return res.json()})
+        .then((data)=>{console.log(data)
+            console.log(data[0].name)
+            // let cityName=data[0].name
+            // console.log(Math.floor(Math.random()*data.length))
+            let cityName=data[Math.floor(Math.random()*data.length)].name
+            console.log(cityName)
+
+            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=50f517015e5efe89eef1307b37e69a2e`)
+              .then((res)=>{return res.json()})
+              .then((data)=>{console.log(data)})
+        }) 
+
+        // extract lat and log from restcountries and pass it to weather api
+        //get the humidity and temperture
+       
+
+        var extractLatLong=fetch("https://restcountries.com/v2/all")
+        .then((res)=>{return res.json()})
+        .then((data)=>{
+            console.log(data[0].latlng)
+            var randomNum=Math.floor(Math.random()*data.length)
+            var lat=data[randomNum].latlng[0]
+            var long=data[randomNum].latlng[1]
+        console.log(long,lat)
+
+        fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=50f517015e5efe89eef1307b37e69a2e`)
+            .then((res)=>{return res.json()})  
+            .then((data)=>{console.log(data)})  
+    })
+        
+
+
+        
+
+    </script>
+</body>
+</html>
